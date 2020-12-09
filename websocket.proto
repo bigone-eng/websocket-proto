@@ -88,7 +88,6 @@ message FlashExchangeOrder {
   Status status = 9;
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
-  string price = 12;
 }
 
 message FlashExchangeOrdersSnapshot {
