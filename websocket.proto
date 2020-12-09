@@ -177,6 +177,7 @@ message Order {
     FILLED = 1;
     CANCELLED = 2;
     FIRED = 3;
+    REJECTED = 4;
   }
   enum Type {
     LIMIT = 0;
@@ -372,6 +373,7 @@ message DepthSnapshot {
 message DepthUpdate {
   Depth depth = 1;
   uint64 change_id = 2;
+  uint64 prev_id = 3;
 }
 
 message AccountsSnapshot {
