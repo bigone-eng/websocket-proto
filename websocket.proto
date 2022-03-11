@@ -1,5 +1,10 @@
 syntax = "proto3";
 
+option go_package = "pusherpb";
+option java_outer_classname = "PXNProtos";
+option java_package = "one.pxn.proto";
+option swift_prefix = "PXN";
+
 import "google/protobuf/timestamp.proto";
 
 message Request {
@@ -69,8 +74,7 @@ message SubscribeFlashExchangeOrdersRequest {
   uint32 limit = 2;
 }
 
-message UnsubscribeFlashExchangeOrdersRequest {
-}
+message UnsubscribeFlashExchangeOrdersRequest {}
 
 message FlashExchangeOrder {
   enum Status {
@@ -88,6 +92,7 @@ message FlashExchangeOrder {
   Status status = 9;
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
+  string price = 12;
 }
 
 message FlashExchangeOrdersSnapshot {
@@ -177,6 +182,7 @@ message Order {
     FILLED = 1;
     CANCELLED = 2;
     FIRED = 3;
+    REJECTED = 4;
   }
   enum Type {
     LIMIT = 0;
@@ -373,6 +379,7 @@ message DepthSnapshot {
 message DepthUpdate {
   Depth depth = 1;
   uint64 change_id = 2;
+  uint64 prev_id = 3;
 }
 
 message AccountsSnapshot {
