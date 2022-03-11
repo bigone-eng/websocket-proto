@@ -204,7 +204,7 @@ message Order {
   Type type = 14;
   Operator operator = 15;
   bool ioc = 16;
-  string client_id = 17;
+  string client_order_id = 17;
 }
 
 message Account {
