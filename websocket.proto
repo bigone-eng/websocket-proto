@@ -37,6 +37,8 @@ message Request {
     UnsubscribeExchangeRatesListRequest unsubscribe_exchange_rates_list_request = 123;
     SubscribeFlashExchangeOrdersRequest subscribe_flash_exchange_orders_request = 124;
     UnsubscribeFlashExchangeOrdersRequest unsubscribe_flash_exchange_orders_request = 125;
+    SubscribeAllViewerOrdersRequest subscribe_all_viewer_orders_request = 126;
+    UnsubscribeAllViewerOrdersRequest unsubscribe_all_viewer_orders_request = 127;
   }
 }
 
@@ -435,4 +437,13 @@ message ExchangeRate {
   string base_asset = 2;
   string price = 3;
   google.protobuf.Timestamp updated_at = 4;
+}
+
+
+message SubscribeAllViewerOrdersRequest {
+  BusinessUnit business_unit = 1;
+}
+
+message UnsubscribeAllViewerOrdersRequest {
+  BusinessUnit business_unit = 1;
 }
