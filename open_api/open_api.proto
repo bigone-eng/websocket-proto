@@ -1,0 +1,158 @@
+syntax = "proto3";
+
+option go_package = "openapipb";
+option java_outer_classname = "PXNProtos";
+option java_package = "one.pxn.proto";
+option swift_prefix = "PXN";
+
+import "google/protobuf/timestamp.proto";
+
+message Request {
+  string request_id = 1;
+  oneof payload {
+    HeartbeatRequest heartbeat_request = 2;
+    Ping ping = 3;
+    CreateOrderRequest create_order_request = 4;
+    CancelOrderRequest cancel_order_request = 5;
+    CancelAllOrdersRequest cancel_all_orders_request = 6;
+    GetOrderRequest get_order_request = 7;
+    LoginRequest login_request = 8;
+    LogoutRequest logout_request = 9;
+    GetLogStatusRequest get_log_status_request = 10;
+  }
+  string token = 11;//login must require token, other request may not require
+}
+
+message Response {
+  string request_id = 1;
+  oneof payload {
+    Heartbeat heartbeat = 2;
+    Pong pong = 3;
+    Order create_order_response = 4;
+    Order cancel_order_response = 5;
+    CancelAllOrdersResponse cancel_all_orders_response = 6;
+    Order get_order_response = 7;
+    LoginResponse login_response = 8;
+    LogoutResponse logout_response = 9;
+    GetLogStatusResponse get_log_status_response = 10;
+    Error error = 11;
+  }
+}
+
+message Error {
+  int64 code = 1;
+  string message = 2;
+}
+
+message HeartbeatRequest {
+  uint64 interval = 1; // second
+}
+
+message Heartbeat {}
+
+message Ping {}
+
+message Pong {}
+
+enum BusinessUnit {
+  SPOT = 0;
+  MARGIN = 1;
+}
+
+message Order {
+  enum Side {
+    BID = 0;
+    ASK = 1;
+  }
+  enum State {
+    PENDING = 0;
+    FILLED = 1;
+    CANCELLED = 2;
+    FIRED = 3;
+    REJECTED = 4;
+  }
+  enum Type {
+    LIMIT = 0;
+    MARKET = 1;
+    STOP_LIMIT = 2;
+    STOP_MARKET = 3;
+  }
+  enum Operator {
+    LTE = 0;
+    GTE = 1;
+  }
+  string id = 1;
+  string price = 2;
+  string stop_price = 3;
+  string amount = 4;
+  string asset_pair_name = 5;
+  Side side = 6;
+  State state = 7;
+  string filled_amount = 8;
+  string filled_fees = 9;
+  string avg_deal_price = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  BusinessUnit business_unit = 13;
+  Type type = 14;
+  Operator operator = 15;
+  bool ioc = 16;
+  string client_order_id = 17;
+}
+
+message CreateOrderRequest {
+  string asset_pair_name = 1;
+  Order.Side side = 2;
+  string price = 3;
+  string amount = 4;
+  Order.Type type = 5;
+  string stop_price = 6;
+  string operator = 7;
+  bool immediate_or_cancel = 8;
+  bool post_only = 9;
+  string client_order_id = 10;
+}
+
+message CancelOrderRequest {
+  oneof payload {
+    string order_id = 1;
+    string client_order_id = 2;
+  }
+}
+
+message CancelAllOrdersRequest {
+  string asset_pair_name = 1;
+}
+
+message CancelAllOrdersResponse {
+  repeated uint64 cancelled = 1;
+  repeated uint64 failed = 2;
+}
+
+message GetOrderRequest {
+  oneof payload {
+    string order_id = 1;
+    string client_order_id = 2;
+  }
+}
+
+message LoginRequest {
+}
+
+message LoginResponse {
+  string api_key = 1;
+}
+
+message LogoutRequest {
+}
+
+message LogoutResponse {
+  string api_key = 1;
+}
+
+message GetLogStatusRequest {
+}
+
+message GetLogStatusResponse {
+  bool login = 1;
+}
