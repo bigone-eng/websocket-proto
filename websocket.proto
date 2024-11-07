@@ -39,6 +39,8 @@ message Request {
     UnsubscribeFlashExchangeOrdersRequest unsubscribe_flash_exchange_orders_request = 125;
     SubscribeAllViewerOrdersRequest subscribe_all_viewer_orders_request = 126;
     UnsubscribeAllViewerOrdersRequest unsubscribe_all_viewer_orders_request = 127;
+    SubscribeSpotCostPriceRequest subscribe_spot_cost_price_request = 128;
+    UnSubscribeSpotCostPriceRequest unsubscribe_spot_cost_price_request = 129;
   }
 }
 
@@ -68,6 +70,8 @@ message Response {
     FlashExchangeOrdersSnapshot flash_exchange_orders_snapshot = 117;
     FlashExchangeOrderUpdate flash_exchange_order_update = 118;
     ExchangeRatesListUpdate exchange_rates_list_update = 119;
+    SpotCostPriceSnapshot spot_cost_price_snapshot = 120;
+    SpotCostPriceUpdate spot_cost_price_update = 121;
   }
 }
 
@@ -446,4 +450,29 @@ message SubscribeAllViewerOrdersRequest {
 
 message UnsubscribeAllViewerOrdersRequest {
   BusinessUnit business_unit = 1;
+}
+
+message SubscribeSpotCostPriceRequest {
+  repeated string asset_uuids = 1;
+}
+
+message UnSubscribeSpotCostPriceRequest {
+  repeated string asset_uuids = 1;
+}
+
+message SpotCostPrice{
+  string asset_uuid = 1;
+  string average_cost_price = 2; // 平均成本价
+  string total_cost_price = 3; //累计成本价
+  string net_inflow_quantity = 4; //净入账数量
+  string total_inflow_value = 5; //累计入账金额
+  string total_outflow_value = 6; //累计出账金额
+}
+
+message SpotCostPriceSnapshot {
+  repeated SpotCostPrice spot_cost_prices = 1;
+}
+
+message SpotCostPriceUpdate {
+  SpotCostPrice spot_cost_price = 1;
 }
