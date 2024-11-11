@@ -461,7 +461,7 @@ message UnSubscribeSpotCostPriceRequest {
 }
 
 message SpotCostPrice {
-  uint64 customer_id = 1;
+  string asset_uuid = 1;
   string average_cost_price = 2; // 平均成本价
   string average_inflow = 3; // 平均净入账数量
   string total_cost_price = 4; // 累计成本价
