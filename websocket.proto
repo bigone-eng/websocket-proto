@@ -463,11 +463,7 @@ message UnSubscribeSpotCostPriceRequest {
 message SpotCostPrice {
   string asset_uuid = 1;
   string average_cost_price = 2; // 平均成本价
-  string average_inflow = 3; // 平均净入账数量
-  string total_cost_price = 4; // 累计成本价
-  string total_inflow = 5; // 累计入账数量
-  string total_inflow_value = 6; // 累计入账金额
-  string total_outflow_value = 7; // 累计出账金额
+  string average_inflow = 3; // 净入账数量
 }
 
 
